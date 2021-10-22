@@ -17,19 +17,14 @@ sed -i '/DEPENDS/ s/$/ +frpc/' `find package/ -follow -type f -path '*/luci-app-
 sed -i 's/ +ntfs-3g/ +ntfs3-mount/' `find package/ -follow -type f -path '*/automount/Makefile'`
 sed -i '/skip\=/ a skip=`mount | grep -q /dev/$device; echo $?`' `find package/ -follow -type f -path */automount/files/15-automount`
 
-svn export https://github.com/klever1988/helloworld/trunk/luci-app-ssr-plus
-dir_ssrp=`find package/ -follow -type d -path '*/luci-app-ssr-plus'`
-cp luci-app-ssr-plus/root/etc/ssrplus/black.list ${dir_ssrp}/root/etc/ssrplus/black.list
-cp luci-app-ssr-plus/root/etc/ssrplus/white.list ${dir_ssrp}/root/etc/ssrplus/white.list
-cp luci-app-ssr-plus/root/etc/ssrplus/blockipv6.sh ${dir_ssrp}/root/etc/ssrplus/blockipv6.sh
-cp luci-app-ssr-plus/root/etc/ssrplus/blackipv4.sh ${dir_ssrp}/root/etc/ssrplus/blackipv4.sh
-cp luci-app-ssr-plus/root/usr/bin/ssr-rules ${dir_ssrp}/root/usr/bin/ssr-rules
-rm -rf luci-app-ssr-plus/
-
 mkdir -p `find package/ -follow -type d -path '*/pdnsd-alt'`/patches
 mv $GITHUB_WORKSPACE/patches/99-disallow-aaaa.patch `find package/ -follow -type d -path '*/pdnsd-alt'`/patches
 
+sed -i 's/5.0/1.0/' .ccache/ccache.conf || true
+
 if [ $BRANCH == 'master' ]; then
+
+  echo '# CONFIG_UCLAMP_TASK is not set' >> target/linux/sunxi/config-5.4
 
   # fix po path for snapshot
   find package/ -follow -type d -path '*/po/zh-cn' | xargs dirname | xargs -n1 -i sh -c "rm -f {}/zh_Hans; ln -sf zh-cn {}/zh_Hans"
@@ -56,6 +51,10 @@ if [ $BRANCH == 'master' ]; then
   wget https://github.com/coolsnowwolf/lede/commit/f341ef96fe4b509a728ba1281281da96bac23673.patch
   git apply f341ef96fe4b509a728ba1281281da96bac23673.patch
   rm f341ef96fe4b509a728ba1281281da96bac23673.patch
+
+  #this is a ugly fix
+  sed -i '/procd-ujail/d' include/target.mk
+  echo 'CONFIG_PACKAGE_procd-seccomp=y' >> $GITHUB_WORKSPACE/common.seed
 
   # bring the ethinfo back
   cd package/emortal/autocore/files/x86
