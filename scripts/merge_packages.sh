@@ -32,16 +32,19 @@ merge_package https://github.com/klever1988/helloworld/branches/tmp/luci-app-ssr
 merge_package https://github.com/klever1988/helloworld/branches/tmp/mosdns
 #merge_package https://github.com/klever1988/openwrt-mos/trunk/luci-app-mosdns
 merge_package https://github.com/project-lede/luci-app-godproxy
-merge_package https://github.com/Beginner-Go/luci-app-tencentddns
 merge_package https://github.com/sundaqiang/openwrt-packages/trunk/luci-app-services-wolplus
 merge_package https://github.com/coolsnowwolf/lede/trunk/package/lean/ntfs3-mount
 merge_package https://github.com/coolsnowwolf/lede/trunk/package/lean/ntfs3
 merge_package https://github.com/coolsnowwolf/lede/trunk/package/lean/uugamebooster
 merge_package https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-uugamebooster
+merge_package https://github.com/kuoruan/openwrt-frp frp
 merge_package https://github.com/kuoruan/luci-app-frpc
 merge_package https://github.com/small-5/luci-app-adblock-plus
 merge_package https://github.com/zxlhhyccc/luci-app-v2raya
 merge_package https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav
 merge_package https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav
+merge_package https://github.com/jerrykuku/luci-app-jd-dailybonus
 drop_package luci-app-cd8021x
 drop_package luci-app-cifs
+drop_package verysync
+drop_package luci-app-verysync
